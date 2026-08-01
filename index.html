@@ -294,22 +294,74 @@
 
     .portrait-panel {
       position: relative;
+      display: grid;
       align-self: end;
       min-height: 510px;
-      border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at 72% 38%, rgba(140, 123, 255, 0.14), transparent 31%),
-        radial-gradient(circle at 28% 72%, rgba(81, 246, 220, 0.11), transparent 34%),
-        linear-gradient(145deg, rgba(13, 23, 33, 0.96), rgba(6, 10, 15, 0.98));
-      overflow: hidden;
+      place-items: center;
+      isolation: isolate;
     }
 
     .portrait-panel::before {
       position: absolute;
+      z-index: 0;
+      top: 50%;
+      left: 50%;
+      width: min(92%, 470px);
+      aspect-ratio: 1;
+      pointer-events: none;
+      border: 1px solid rgba(81, 246, 220, 0.3);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 22px rgba(81, 246, 220, 0.035),
+        0 0 0 46px rgba(140, 123, 255, 0.025);
+      content: "";
+      transform: translate(-50%, -50%);
+    }
+
+    .portrait-panel::after {
+      position: absolute;
+      z-index: 3;
+      top: 13%;
+      right: 9%;
+      width: 8px;
+      height: 8px;
+      border: 1px solid var(--lime);
+      box-shadow:
+        -350px 80px 0 -1px var(--cyan),
+        -30px 336px 0 -1px var(--violet);
+      content: "";
+      transform: rotate(45deg);
+    }
+
+    .portrait-circle {
+      position: relative;
+      z-index: 1;
+      width: min(86%, 440px);
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: 1px solid rgba(244, 247, 249, 0.18);
+      border-radius: 50%;
+      background: var(--panel);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+    }
+
+    .portrait-circle::before {
+      position: absolute;
       z-index: 2;
       inset: 0;
       pointer-events: none;
-      background: repeating-linear-gradient(to bottom, transparent 0 4px, rgba(6, 10, 15, 0.16) 5px);
+      background: repeating-linear-gradient(to bottom, transparent 0 4px, rgba(6, 10, 15, 0.09) 5px);
+      content: "";
+    }
+
+    .portrait-circle::after {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to top, rgba(6, 10, 15, 0.72), transparent 35%),
+        linear-gradient(135deg, rgba(81, 246, 220, 0.1), transparent 44%);
       content: "";
     }
 
@@ -319,25 +371,17 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 54%;
-      filter: saturate(0.82) contrast(1.06) brightness(0.82);
-      transform: scale(1.015);
-    }
-    }
-
-    .portrait-panel::after {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(6, 10, 15, 0.94) 3%, transparent 58%), linear-gradient(135deg, rgba(81, 246, 220, 0.15), transparent 45%);
-      content: "";
+      object-position: center;
+      filter: saturate(0.88) contrast(1.04) brightness(0.9);
+      transform: scale(1.01);
     }
 
     .portrait-data {
       position: absolute;
       z-index: 3;
-      right: 20px;
-      bottom: 20px;
-      left: 20px;
+      right: 42px;
+      bottom: 28px;
+      left: 42px;
       display: flex;
       justify-content: space-between;
       color: #b7c2ca;
@@ -1437,9 +1481,11 @@
             Durante más de 22 años he conectado ingeniería industrial, investigación profunda e infraestructura de escala nacional en América Latina.
           </p>
         </div>
-        <div class="portrait-panel" role="img" aria-label="Retrato de Esteban Hernández frente a una superficie planetaria" data-i18n-aria="portrait_aria">
-          <img class="portrait-image" src="assets/esteban-hernandez-portrait.jpg" alt="" width="768" height="1024" decoding="async" fetchpriority="high">
-          <div class="portrait-data"><span data-i18n="portrait_profile">Perfil / 001</span><span data-i18n="portrait_active">Activo</span></div>
+        <div class="portrait-panel" role="img" aria-label="Retrato circular de Esteban Hernández con la luna al fondo" data-i18n-aria="portrait_aria">
+          <div class="portrait-circle">
+            <img class="portrait-image" src="assets/esteban-hernandez-portrait-circle-v2.webp" alt="" width="1000" height="1000" decoding="async" fetchpriority="high">
+            <div class="portrait-data"><span data-i18n="portrait_profile">Perfil / 001</span><span data-i18n="portrait_active">Activo</span></div>
+          </div>
         </div>
       </div>
       <div class="hero-foot">
@@ -1992,7 +2038,7 @@
         nav_aria: "Primary navigation",
         language_aria: "Select language",
         metrics_aria: "Key figures",
-        portrait_aria: "Portrait of Esteban Hernández in front of a planetary surface",
+        portrait_aria: "Circular portrait of Esteban Hernández with the moon in the background",
         orbit_aria: "Cybercolombia impact network"
       };
 
