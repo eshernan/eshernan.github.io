@@ -643,6 +643,179 @@
       line-height: 1.6;
     }
 
+    .initiative-block {
+      margin-top: 96px;
+    }
+
+    .initiative-head {
+      display: grid;
+      margin-bottom: 34px;
+      grid-template-columns: 0.65fr 1.35fr;
+      gap: 48px;
+      align-items: end;
+    }
+
+    .initiative-head h3 {
+      max-width: 780px;
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(2.1rem, 4vw, 4.25rem);
+      font-weight: 600;
+      letter-spacing: -0.065em;
+      line-height: 0.98;
+    }
+
+    .initiative-grid {
+      display: grid;
+      border-top: 1px solid rgba(6, 10, 15, 0.2);
+      border-left: 1px solid rgba(6, 10, 15, 0.2);
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .initiative-card {
+      position: relative;
+      display: flex;
+      min-height: 390px;
+      padding: 30px;
+      overflow: hidden;
+      border-right: 1px solid rgba(6, 10, 15, 0.2);
+      border-bottom: 1px solid rgba(6, 10, 15, 0.2);
+      flex-direction: column;
+    }
+
+    .initiative-card::after {
+      position: absolute;
+      right: -70px;
+      bottom: -90px;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(23, 127, 112, 0.16);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .initiative-card--quantum::after {
+      border-color: rgba(90, 67, 186, 0.22);
+      box-shadow: 0 0 0 42px rgba(90, 67, 186, 0.045);
+    }
+
+    .initiative-meta {
+      display: flex;
+      position: relative;
+      z-index: 1;
+      justify-content: space-between;
+      color: #177f70;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .initiative-card--quantum .initiative-meta {
+      color: #5a43ba;
+    }
+
+    .initiative-card h4 {
+      position: relative;
+      z-index: 1;
+      margin: 70px 0 12px;
+      font-family: var(--display);
+      font-size: clamp(1.55rem, 2.5vw, 2.4rem);
+      font-weight: 600;
+      letter-spacing: -0.055em;
+      line-height: 1.02;
+    }
+
+    .initiative-role {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 18px;
+      color: #177f70;
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .initiative-card--quantum .initiative-role {
+      color: #5a43ba;
+    }
+
+    .initiative-card > p:not(.initiative-role) {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: #52606b;
+      font-size: 0.84rem;
+      line-height: 1.68;
+    }
+
+    .initiative-card a {
+      position: relative;
+      z-index: 2;
+      align-self: flex-start;
+      margin-top: auto;
+      padding-top: 28px;
+      color: #172027;
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .initiative-card a:hover,
+    .initiative-card a:focus-visible {
+      color: #177f70;
+    }
+
+    .alliance-outreach {
+      display: grid;
+      margin-top: 28px;
+      padding: 34px;
+      border: 1px solid rgba(6, 10, 15, 0.2);
+      background: linear-gradient(105deg, rgba(81, 246, 220, 0.12), rgba(140, 123, 255, 0.1));
+      grid-template-columns: 0.48fr 1.2fr auto;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .alliance-outreach strong {
+      color: #177f70;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .alliance-outreach p {
+      margin: 0;
+      color: #293640;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    .alliance-outreach a {
+      color: #172027;
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .outreach-links {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .outreach-links a:hover,
+    .outreach-links a:focus-visible {
+      color: #177f70;
+    }
+
     .academic-layout {
       display: grid;
       grid-template-columns: 0.78fr 1.22fr;
@@ -1157,6 +1330,10 @@
 
       .career-card:nth-child(n) { grid-column: span 6; }
       .cyber-milestones { grid-template-columns: repeat(2, 1fr); }
+      .initiative-head { grid-template-columns: 1fr; gap: 22px; }
+      .initiative-grid { grid-template-columns: 1fr; }
+      .initiative-card { min-height: 330px; }
+      .alliance-outreach { grid-template-columns: 1fr; gap: 16px; }
       .academic-layout { grid-template-columns: 1fr; }
 
       .project-card--featured { grid-column: span 12; }
@@ -1186,6 +1363,9 @@
       .career-grid { grid-template-columns: 1fr; }
       .career-card:nth-child(n) { grid-column: 1; min-height: 290px; }
       .cyber-milestones { grid-template-columns: 1fr; }
+      .initiative-block { margin-top: 72px; }
+      .initiative-card { min-height: 360px; padding: 26px; }
+      .alliance-outreach { padding: 26px; }
       .impact-layout { gap: 35px; }
 
       .orbit { min-height: 380px; transform: scale(0.78); }
@@ -1422,8 +1602,50 @@
           <article class="cyber-milestone">
             <strong>2026</strong>
             <h3 data-i18n="cyber_2026_title">Próxima frontera</h3>
-            <p data-i18n="cyber_2026_description">Urban AI, diagnóstico nacional HPC y fundación de la Alianza Cuántica Colombiana.</p>
+            <p data-i18n="cyber_2026_description">Urban AI, diagnóstico nacional HPC, CARLA Weather 2026 y activación de la Alianza Cuántica Colombiana.</p>
           </article>
+        </div>
+
+        <div class="initiative-block" id="eventos">
+          <div class="initiative-head">
+            <p class="mono-label" data-i18n="initiatives_label">Liderazgo científico</p>
+            <h3 data-i18n="initiatives_title">Convocar expertos para convertir conocimiento en capacidad regional.</h3>
+          </div>
+
+          <div class="initiative-grid">
+            <article class="initiative-card">
+              <div class="initiative-meta"><span>CARLA · 2025</span><span>01</span></div>
+              <h4 data-i18n="carla_2025_title">Avances en pronóstico meteorológico</h4>
+              <p class="initiative-role" data-i18n="carla_2025_role">Organizador · Moderador estratégico</p>
+              <p data-i18n="carla_2025_description">Primera edición latinoamericana y caribeña en Kingston. Articuló modelación WRF y MPAS-A, HPC e IA con expertos de WMO, ECMWF, NVIDIA, NSF NCAR, INPE y organismos meteorológicos regionales.</p>
+              <a href="https://www.cybercolombia.org/events/workshop_carla2025/" target="_blank" rel="noreferrer" data-i18n="event_details">Ver iniciativa ↗</a>
+            </article>
+
+            <article class="initiative-card">
+              <div class="initiative-meta"><span>CARLA · 2026</span><span>02</span></div>
+              <h4 data-i18n="carla_2026_title">Soberanía regional de pronóstico</h4>
+              <p class="initiative-role" data-i18n="carla_2026_role">Comité organizador · Córdoba</p>
+              <p data-i18n="carla_2026_description">Segunda edición centrada en IA para pronóstico, cooperación Sur-Sur, modelos de nueva generación e infraestructura regional para reducir dependencias y fortalecer respuestas climáticas locales.</p>
+              <a href="https://www.cybercolombia.org/events/workshop_carla2026/" target="_blank" rel="noreferrer" data-i18n="event_details">Ver iniciativa ↗</a>
+            </article>
+
+            <article class="initiative-card initiative-card--quantum">
+              <div class="initiative-meta"><span>Quantum Day · 2026</span><span>03</span></div>
+              <h4 data-i18n="quantum_day_title">De la conversación al acceso real</h4>
+              <p class="initiative-role" data-i18n="quantum_day_role">Organizador · Formación aplicada</p>
+              <p data-i18n="quantum_day_description">Jornada práctica con Amazon Braket y Xanadu para explorar simuladores, QPU en la nube, PennyLane y flujos híbridos cuántico-clásicos, conectada con la novena Escuela de Verano HPC.</p>
+              <a href="https://www.cybercolombia.org/events/quantum_day_2026/" target="_blank" rel="noreferrer" data-i18n="event_details">Ver iniciativa ↗</a>
+            </article>
+          </div>
+
+          <aside class="alliance-outreach">
+            <strong data-i18n="outreach_label">23 JUL 2026 · 13:00—13:30</strong>
+            <p data-i18n="outreach_description"><em>Computación cuántica en Colombia: mitos y realidades</em>, ponencia presentada en el Auditorio de Tech Day de la Cámara de Comercio de Bogotá. Una conversación rigurosa y accesible sobre capacidades actuales, investigación nacional y el trabajo de Cybercolombia y la Alianza Cuántica Colombiana.</p>
+            <div class="outreach-links">
+              <a href="https://techday.ccb.org.co/#salas" target="_blank" rel="noreferrer" data-i18n="outreach_agenda">Agenda ↗</a>
+              <a href="https://www.linkedin.com/feed/update/urn:li:activity:7487899611202826240" target="_blank" rel="noreferrer" data-i18n="outreach_link">Reseña ↗</a>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
@@ -1696,7 +1918,23 @@
         cyber_2021_title: "Regional scale",
         cyber_2021_description: "Research publications, nine training editions, and the coordination of ten Colombian universities.",
         cyber_2026_title: "The next frontier",
-        cyber_2026_description: "Urban AI, a national HPC assessment, and the foundation of the Colombian Quantum Alliance.",
+        cyber_2026_description: "Urban AI, a national HPC assessment, CARLA Weather 2026, and the activation of the Colombian Quantum Alliance.",
+        initiatives_label: "Scientific leadership",
+        initiatives_title: "Bringing experts together to turn knowledge into regional capability.",
+        carla_2025_title: "Advances in weather forecasting",
+        carla_2025_role: "Organizer · Strategic moderator",
+        carla_2025_description: "The first Latin American and Caribbean edition, held in Kingston, connected WRF and MPAS-A modeling, HPC, and AI with experts from WMO, ECMWF, NVIDIA, NSF NCAR, INPE, and regional meteorological organizations.",
+        carla_2026_title: "Regional forecasting sovereignty",
+        carla_2026_role: "Organizing committee · Córdoba",
+        carla_2026_description: "A second edition focused on AI-enabled forecasting, South–South cooperation, next-generation models, and regional infrastructure to reduce dependencies and strengthen local climate-response capabilities.",
+        quantum_day_title: "From conversation to real access",
+        quantum_day_role: "Organizer · Applied training",
+        quantum_day_description: "A hands-on program with Amazon Braket and Xanadu covering simulators, cloud-based QPUs, PennyLane, and hybrid quantum–classical workflows, held in connection with the ninth HPC Summer School.",
+        event_details: "Explore initiative ↗",
+        outreach_label: "23 JUL 2026 · 1:00—1:30 PM",
+        outreach_description: "<em>Quantum Computing in Colombia: Myths and Realities</em>, presented in the main auditorium at the Bogotá Chamber of Commerce Tech Day. A rigorous, accessible discussion of current capabilities, research in Colombia, and the work of Cybercolombia and the Colombian Quantum Alliance.",
+        outreach_agenda: "Agenda ↗",
+        outreach_link: "Recap ↗",
         academic_label: "04 / Research and academia",
         academic_title: "Knowledge that is published, taught, and applied.",
         academic_description: "A university professor since 2011, Cum Laude Ph.D., and researcher in performance engineering, heterogeneous architectures, numerical weather prediction, and HPC education.",
