@@ -775,7 +775,7 @@
       color: #177f70;
     }
 
-    .alliance-outreach {
+    .community-contribution {
       display: grid;
       margin-top: 28px;
       padding: 34px;
@@ -786,7 +786,12 @@
       align-items: center;
     }
 
-    .alliance-outreach strong {
+    .community-contribution--climate {
+      margin-top: 14px;
+      background: linear-gradient(105deg, rgba(140, 123, 255, 0.1), rgba(189, 255, 90, 0.09));
+    }
+
+    .community-contribution strong {
       color: #177f70;
       font-family: var(--mono);
       font-size: 0.65rem;
@@ -794,14 +799,18 @@
       text-transform: uppercase;
     }
 
-    .alliance-outreach p {
+    .community-contribution--climate strong {
+      color: #5a43ba;
+    }
+
+    .community-contribution p {
       margin: 0;
       color: #293640;
       font-size: 0.88rem;
       line-height: 1.65;
     }
 
-    .alliance-outreach a {
+    .community-contribution a {
       color: #172027;
       font-family: var(--mono);
       font-size: 0.63rem;
@@ -1339,7 +1348,7 @@
       .initiative-head { grid-template-columns: 1fr; gap: 22px; }
       .initiative-grid { grid-template-columns: 1fr; }
       .initiative-card { min-height: 330px; }
-      .alliance-outreach { grid-template-columns: 1fr; gap: 16px; }
+      .community-contribution { grid-template-columns: 1fr; gap: 16px; }
       .academic-layout { grid-template-columns: 1fr; }
 
       .project-card--featured { grid-column: span 12; }
@@ -1371,7 +1380,7 @@
       .cyber-milestones { grid-template-columns: 1fr; }
       .initiative-block { margin-top: 72px; }
       .initiative-card { min-height: 360px; padding: 26px; }
-      .alliance-outreach { padding: 26px; }
+      .community-contribution { padding: 26px; }
       .impact-layout { gap: 35px; }
 
       .orbit { min-height: 380px; transform: scale(0.78); }
@@ -1644,12 +1653,20 @@
             </article>
           </div>
 
-          <aside class="alliance-outreach">
+          <aside class="community-contribution">
             <strong data-i18n="outreach_label">23 JUL 2026 · 13:00—13:30</strong>
             <p data-i18n="outreach_description"><em>Computación cuántica en Colombia: mitos y realidades</em>, ponencia presentada en el Auditorio de Tech Day de la Cámara de Comercio de Bogotá. Una conversación rigurosa y accesible sobre capacidades actuales, investigación nacional y el trabajo de Cybercolombia y la Alianza Cuántica Colombiana.</p>
             <div class="outreach-links">
               <a href="https://techday.ccb.org.co/#salas" target="_blank" rel="noreferrer" data-i18n="outreach_agenda">Agenda ↗</a>
               <a href="https://www.linkedin.com/feed/update/urn:li:activity:7487899611202826240" target="_blank" rel="noreferrer" data-i18n="outreach_link">Reseña ↗</a>
+            </div>
+          </aside>
+
+          <aside class="community-contribution community-contribution--climate">
+            <strong data-i18n="climate_contribution_label">14—15 OCT 2025 · ESSEX, UK</strong>
+            <p data-i18n="climate_contribution_description"><em>Expanding and Accelerating Global Climate Data Collaboration</em>. Participación desde Cybercolombia en un encuentro de 37 especialistas convocado por Radiant Earth. El diálogo conectó instituciones durables con gobernanza cooperativa, financiación sostenible, trazabilidad, publicación reproducible y cómputo federado, destacando que el Sur Global debe co-diseñar estas infraestructuras.</p>
+            <div class="outreach-links">
+              <a href="https://radiant.earth/" target="_blank" rel="noreferrer">Radiant Earth ↗</a>
             </div>
           </aside>
         </div>
@@ -1941,6 +1958,8 @@
         outreach_description: "<em>Quantum Computing in Colombia: Myths and Realities</em>, presented in the main auditorium at the Bogotá Chamber of Commerce Tech Day. A rigorous, accessible discussion of current capabilities, research in Colombia, and the work of Cybercolombia and the Colombian Quantum Alliance.",
         outreach_agenda: "Agenda ↗",
         outreach_link: "Recap ↗",
+        climate_contribution_label: "14—15 OCT 2025 · ESSEX, UK",
+        climate_contribution_description: "<em>Expanding and Accelerating Global Climate Data Collaboration</em>. Participation on behalf of Cybercolombia in a Radiant Earth convening of 37 specialists. The discussion connected enduring institutions with cooperative governance, sustainable funding, provenance, reproducible publication, and federated computing, emphasizing that the Global South must help co-design this infrastructure.",
         academic_label: "04 / Research and academia",
         academic_title: "Knowledge that is published, taught, and applied.",
         academic_description: "A university professor since 2011, Cum Laude Ph.D., and researcher in performance engineering, heterogeneous architectures, numerical weather prediction, and HPC education.",
