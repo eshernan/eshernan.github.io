@@ -313,114 +313,16 @@
       content: "";
     }
 
-    .identity-visual {
+    .portrait-image {
       position: absolute;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(244, 247, 249, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(244, 247, 249, 0.035) 1px, transparent 1px);
-      background-size: 42px 42px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 54%;
+      filter: saturate(0.82) contrast(1.06) brightness(0.82);
+      transform: scale(1.015);
     }
-
-    .identity-visual::before {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: min(72%, 370px);
-      aspect-ratio: 1;
-      border: 1px solid rgba(81, 246, 220, 0.32);
-      border-radius: 50%;
-      box-shadow:
-        0 0 0 42px rgba(81, 246, 220, 0.045),
-        0 0 0 84px rgba(140, 123, 255, 0.035);
-      content: "";
-      transform: translate(-50%, -52%);
-    }
-
-    .identity-visual::after {
-      position: absolute;
-      top: 11%;
-      right: 12%;
-      width: 8px;
-      height: 8px;
-      border: 1px solid var(--lime);
-      box-shadow:
-        -242px 92px 0 -1px var(--cyan),
-        -60px 288px 0 -1px var(--violet),
-        -286px 328px 0 -1px rgba(244, 247, 249, 0.5);
-      content: "";
-      transform: rotate(45deg);
-    }
-
-    .identity-coordinates {
-      position: absolute;
-      top: 22px;
-      left: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      color: #61707c;
-      font-family: var(--mono);
-      font-size: 0.56rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .identity-coordinates span:first-child {
-      color: var(--cyan);
-    }
-
-    .identity-monogram {
-      position: absolute;
-      top: 48%;
-      left: 50%;
-      display: flex;
-      align-items: flex-end;
-      transform: translate(-50%, -50%);
-    }
-
-    .identity-monogram strong {
-      color: var(--text);
-      font-family: var(--display);
-      font-size: clamp(5.6rem, 9vw, 8.8rem);
-      font-weight: 500;
-      letter-spacing: -0.12em;
-      line-height: 0.78;
-      text-shadow: 0 0 34px rgba(81, 246, 220, 0.1);
-    }
-
-    .identity-monogram span {
-      margin: 0 0 -3px 18px;
-      color: var(--cyan);
-      font-family: var(--mono);
-      font-size: 0.56rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      writing-mode: vertical-rl;
-    }
-
-    .identity-spectrum {
-      position: absolute;
-      right: 24px;
-      bottom: 58px;
-      left: 24px;
-      display: grid;
-      height: 26px;
-      grid-template-columns: 1.2fr 0.8fr 2fr 0.5fr 1.5fr;
-      gap: 4px;
-      align-items: end;
-    }
-
-    .identity-spectrum span {
-      display: block;
-      height: 2px;
-      background: var(--cyan);
-    }
-
-    .identity-spectrum span:nth-child(2) { height: 7px; background: var(--violet); }
-    .identity-spectrum span:nth-child(3) { height: 13px; background: var(--lime); }
-    .identity-spectrum span:nth-child(4) { height: 21px; background: var(--cyan); }
-    .identity-spectrum span:nth-child(5) { height: 5px; background: var(--violet); }
     }
 
     .portrait-panel::after {
@@ -1526,12 +1428,8 @@
             Durante más de 22 años he conectado ingeniería industrial, investigación profunda e infraestructura de escala nacional en América Latina.
           </p>
         </div>
-        <div class="portrait-panel" role="img" aria-label="Identidad visual abstracta de Esteban Hernández" data-i18n-aria="portrait_aria">
-          <div class="identity-visual" aria-hidden="true">
-            <div class="identity-coordinates"><span>BOG · COL</span><span>04.7110° N / 74.0721° W</span></div>
-            <div class="identity-monogram"><strong>EH</strong><span>Systems / Science</span></div>
-            <div class="identity-spectrum"><span></span><span></span><span></span><span></span><span></span></div>
-          </div>
+        <div class="portrait-panel" role="img" aria-label="Retrato de Esteban Hernández frente a una superficie planetaria" data-i18n-aria="portrait_aria">
+          <img class="portrait-image" src="assets/esteban-hernandez-portrait.jpg" alt="" width="768" height="1024" decoding="async" fetchpriority="high">
           <div class="portrait-data"><span data-i18n="portrait_profile">Perfil / 001</span><span data-i18n="portrait_active">Activo</span></div>
         </div>
       </div>
@@ -2075,7 +1973,7 @@
         nav_aria: "Primary navigation",
         language_aria: "Select language",
         metrics_aria: "Key figures",
-        portrait_aria: "Abstract visual identity for Esteban Hernández",
+        portrait_aria: "Portrait of Esteban Hernández in front of a planetary surface",
         orbit_aria: "Cybercolombia impact network"
       };
 
