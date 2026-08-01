@@ -5,23 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Esteban Hernández — Arquitectura de software, computación de alto rendimiento e innovación científica.">
   <title>Esteban Hernández — Computación avanzada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
-
     :root {
-      --bg: #060a0f;
-      --panel: #0a1119;
-      --panel-soft: #0d1721;
-      --text: #f4f7f9;
-      --muted: #84919d;
-      --cyan: #51f6dc;
-      --lime: #bdff5a;
-      --violet: #8c7bff;
+      /* Primitive tokens */
+      --color-ink-950: #060a0f;
+      --color-ink-900: #0a1119;
+      --color-ink-850: #0d1721;
+      --color-paper-50: #f4f7f9;
+      --color-slate-300: #b7c2ca;
+      --color-slate-400: #9aa8b3;
+      --color-slate-500: #84919d;
+      --color-cyan-400: #51f6dc;
+      --color-lime-400: #bdff5a;
+      --color-violet-400: #8c7bff;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --radius-sm: 2px;
+      --radius-pill: 999px;
+      --duration-fast: 160ms;
+      --duration-normal: 240ms;
+
+      /* Semantic tokens */
+      --bg: var(--color-ink-950);
+      --panel: var(--color-ink-900);
+      --panel-soft: var(--color-ink-850);
+      --text: var(--color-paper-50);
+      --muted: var(--color-slate-400);
+      --cyan: var(--color-cyan-400);
+      --lime: var(--color-lime-400);
+      --violet: var(--color-violet-400);
       --line: rgba(132, 145, 157, 0.2);
       --line-bright: rgba(81, 246, 220, 0.32);
       --mono: "DM Mono", monospace;
       --sans: "Inter", sans-serif;
       --display: "Space Grotesk", sans-serif;
+
+      /* Component tokens */
+      --control-height: 44px;
+      --card-bg: rgba(10, 17, 25, 0.76);
+      --card-border: var(--line);
+      --card-border-active: var(--line-bright);
+      --section-space: clamp(96px, 10vw, 144px);
     }
 
     * {
@@ -30,6 +63,10 @@
 
     html {
       scroll-behavior: smooth;
+    }
+
+    [id] {
+      scroll-margin-top: 88px;
     }
 
     body {
@@ -61,6 +98,32 @@
       color: inherit;
     }
 
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: 12px;
+      left: 12px;
+      padding: 12px 16px;
+      background: var(--cyan);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      transform: translateY(-160%);
+      transition: transform var(--duration-fast) ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
     ::selection {
       background: var(--cyan);
       color: var(--bg);
@@ -78,7 +141,7 @@
       margin: 0;
       color: var(--cyan);
       font-family: var(--mono);
-      font-size: 0.67rem;
+      font-size: 0.75rem;
       font-weight: 400;
       letter-spacing: 0.13em;
       text-transform: uppercase;
@@ -93,19 +156,22 @@
     }
 
     .topbar {
-      position: absolute;
-      z-index: 10;
+      position: fixed;
+      z-index: 40;
       top: 0;
       left: 0;
       width: 100%;
+      border-bottom: 1px solid rgba(132, 145, 157, 0.14);
+      background: rgba(6, 10, 15, 0.82);
+      backdrop-filter: blur(18px);
     }
 
     .topbar-inner {
+      position: relative;
       display: grid;
       min-height: 88px;
-      border-bottom: 1px solid var(--line);
-      grid-template-columns: auto 1fr auto;
-      gap: 44px;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 32px;
       align-items: center;
     }
 
@@ -125,7 +191,7 @@
       border: 1px solid var(--line-bright);
       color: var(--cyan);
       font-family: var(--mono);
-      font-size: 0.63rem;
+      font-size: 0.75rem;
     }
 
     .logo-symbol::before,
@@ -161,7 +227,7 @@
     .topbar-status {
       color: var(--muted);
       font-family: var(--mono);
-      font-size: 0.61rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -172,17 +238,20 @@
 
     .nav {
       display: flex;
-      gap: 24px;
+      gap: 22px;
     }
 
     .nav a {
+      display: inline-flex;
+      min-height: var(--control-height);
+      align-items: center;
       color: var(--muted);
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-decoration: none;
       text-transform: uppercase;
-      transition: color 160ms ease;
+      transition: color var(--duration-fast) ease;
     }
 
     .nav a:hover,
@@ -192,8 +261,8 @@
 
     .language-switch {
       display: flex;
-      min-width: 88px;
-      height: 30px;
+      min-width: 102px;
+      height: var(--control-height);
       padding: 3px;
       border: 1px solid var(--line);
       align-items: center;
@@ -202,15 +271,15 @@
     }
 
     .language-switch button {
-      width: 36px;
-      height: 22px;
+      width: 44px;
+      height: 36px;
       padding: 0;
       border: 0;
       background: transparent;
       color: var(--muted);
       cursor: pointer;
       font-family: var(--mono);
-      font-size: 0.57rem;
+      font-size: 0.75rem;
       letter-spacing: 0.06em;
     }
 
@@ -220,13 +289,69 @@
     }
 
     .language-switch button:focus-visible {
-      outline: 1px solid var(--cyan);
-      outline-offset: 2px;
+      outline-offset: 1px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: var(--control-height);
+      height: var(--control-height);
+      padding: 0;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      place-items: center;
+    }
+
+    .menu-toggle-lines,
+    .menu-toggle-lines::before,
+    .menu-toggle-lines::after {
+      display: block;
+      width: 17px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+      transition: transform var(--duration-fast) ease;
+    }
+
+    .menu-toggle-lines {
+      position: relative;
+    }
+
+    .menu-toggle-lines::before {
+      position: absolute;
+      top: -5px;
+    }
+
+    .menu-toggle-lines::after {
+      position: absolute;
+      top: 5px;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle-lines {
+      background: transparent;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle-lines::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-toggle-lines::after {
+      top: 0;
+      transform: rotate(-45deg);
     }
 
     .hero {
       position: relative;
-      min-height: 860px;
+      min-height: 820px;
       padding: 170px 0 70px;
       border-bottom: 1px solid var(--line);
       overflow: hidden;
@@ -250,9 +375,9 @@
       position: relative;
       z-index: 2;
       display: grid;
-      min-height: 620px;
-      grid-template-columns: 1.35fr 0.65fr;
-      gap: 80px;
+      min-height: 580px;
+      grid-template-columns: minmax(0, 1.28fr) minmax(340px, 0.72fr);
+      gap: 64px;
       align-items: end;
     }
 
@@ -264,7 +389,7 @@
       max-width: 930px;
       margin: 30px 0 0;
       font-family: var(--display);
-      font-size: clamp(4.5rem, 9vw, 8.6rem);
+      font-size: clamp(4.25rem, 8vw, 7.8rem);
       font-weight: 500;
       letter-spacing: -0.075em;
       line-height: 0.86;
@@ -282,7 +407,7 @@
       margin-top: 52px;
       padding-left: 22px;
       border-left: 1px solid var(--cyan);
-      color: #b7c2ca;
+      color: var(--color-slate-300);
       font-size: clamp(1rem, 1.5vw, 1.25rem);
       line-height: 1.7;
     }
@@ -290,6 +415,36 @@
     .hero-statement strong {
       color: var(--text);
       font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .hero-action {
+      display: inline-flex;
+      min-height: var(--control-height);
+      padding: 0 18px;
+      border: 1px solid var(--line-bright);
+      align-items: center;
+      gap: 18px;
+      color: var(--cyan);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.07em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background var(--duration-fast) ease, color var(--duration-fast) ease, transform var(--duration-fast) ease;
+    }
+
+    .hero-action.primary,
+    .hero-action:hover {
+      background: var(--cyan);
+      color: var(--bg);
+      transform: translateY(-2px);
     }
 
     .portrait-panel {
@@ -386,7 +541,7 @@
       justify-content: space-between;
       color: #b7c2ca;
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -408,7 +563,7 @@
       justify-content: space-between;
       color: #61707c;
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -422,7 +577,7 @@
 
     section {
       position: relative;
-      padding: 128px 0;
+      padding: var(--section-space) 0;
     }
 
     .section-head {
@@ -489,7 +644,7 @@
       margin: 0;
       color: var(--muted);
       font-family: var(--mono);
-      font-size: 0.64rem;
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       line-height: 1.6;
       text-transform: uppercase;
@@ -535,7 +690,7 @@
     .expertise-index {
       color: var(--cyan);
       font-family: var(--mono);
-      font-size: 0.64rem;
+      font-size: 0.75rem;
     }
 
     .expertise-card h3 {
@@ -609,7 +764,7 @@
       gap: 18px;
       color: var(--muted);
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.75rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
     }
@@ -634,7 +789,7 @@
       z-index: 2;
       margin: 0 0 20px;
       color: #a8b5bf;
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       font-weight: 500;
     }
 
@@ -644,7 +799,7 @@
       max-width: 620px;
       margin: 0;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       line-height: 1.7;
     }
 
@@ -676,7 +831,7 @@
       margin-bottom: 48px;
       color: #177f70;
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.75rem;
     }
 
     .cyber-milestone h3 {
@@ -756,7 +911,7 @@
       justify-content: space-between;
       color: #177f70;
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -782,7 +937,7 @@
       margin: 0 0 18px;
       color: #177f70;
       font-family: var(--mono);
-      font-size: 0.67rem;
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
@@ -808,7 +963,7 @@
       padding-top: 28px;
       color: #172027;
       font-family: var(--mono);
-      font-size: 0.63rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-decoration: none;
       text-transform: uppercase;
@@ -838,7 +993,7 @@
     .community-contribution strong {
       color: #177f70;
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -857,7 +1012,7 @@
     .community-contribution a {
       color: #172027;
       font-family: var(--mono);
-      font-size: 0.63rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-decoration: none;
       text-transform: uppercase;
@@ -896,7 +1051,7 @@
     .publication span {
       color: var(--cyan);
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
     }
@@ -915,7 +1070,7 @@
     .publication p {
       margin: 0;
       color: var(--muted);
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       line-height: 1.6;
     }
 
@@ -967,7 +1122,7 @@
       border-bottom: 1px solid #177f70;
       color: #177f70;
       font-family: var(--mono);
-      font-size: 0.66rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
       text-decoration: none;
       text-transform: uppercase;
@@ -1032,7 +1187,7 @@
       border: 1px solid rgba(6, 10, 15, 0.22);
       background: var(--text);
       font-family: var(--mono);
-      font-size: 0.59rem;
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       text-align: center;
       text-transform: uppercase;
@@ -1060,7 +1215,7 @@
     .work-type {
       color: var(--muted);
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.75rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
     }
@@ -1119,7 +1274,7 @@
     .thought-type {
       color: var(--cyan);
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
@@ -1166,96 +1321,197 @@
       border: 1px solid #3a4854;
       color: #75828d;
       font-family: var(--mono);
-      font-size: 0.54rem;
+      font-size: 0.75rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
     }
 
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 20px;
+    .selected-work {
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 88% 18%, rgba(140, 123, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, rgba(10, 17, 25, 0.82), rgba(6, 10, 15, 0.96));
     }
 
-    .project-card {
+    .case-study-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: minmax(245px, auto);
+      gap: 18px;
+    }
+
+    .case-study {
       position: relative;
       display: flex;
-      min-height: 340px;
+      min-height: 300px;
       padding: 34px;
-      border: 1px solid var(--line);
-      background: var(--panel);
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
       flex-direction: column;
       justify-content: space-between;
       text-decoration: none;
       overflow: hidden;
-      transition: transform 180ms ease, border-color 180ms ease;
+      isolation: isolate;
+      transition: transform var(--duration-normal) ease, border-color var(--duration-normal) ease, background var(--duration-normal) ease;
     }
 
-    .project-card--featured {
-      min-height: 390px;
-      grid-column: span 12;
+    .case-study--primary {
+      min-height: 618px;
+      grid-column: span 7;
+      grid-row: span 2;
       background:
-        linear-gradient(120deg, rgba(189, 255, 90, 0.09), transparent 46%),
-        var(--panel);
+        linear-gradient(145deg, rgba(189, 255, 90, 0.11), transparent 48%),
+        var(--card-bg);
     }
 
-    .project-card:not(.project-card--featured) {
-      grid-column: span 6;
+    .case-study:not(.case-study--primary) {
+      grid-column: span 5;
     }
 
-    .project-card:hover,
-    .project-card:focus-visible {
-      border-color: var(--cyan);
-      outline: none;
-      transform: translateY(-6px);
-    }
-
-    .project-card::after {
+    .case-study::before {
       position: absolute;
-      right: -70px;
-      bottom: -90px;
-      width: 230px;
-      height: 230px;
-      border: 1px solid rgba(81, 246, 220, 0.18);
+      z-index: -1;
+      right: -110px;
+      bottom: -130px;
+      width: 340px;
+      height: 340px;
+      border: 1px solid rgba(81, 246, 220, 0.17);
       border-radius: 50%;
-      box-shadow: 0 0 0 32px rgba(81, 246, 220, 0.02);
+      box-shadow: 0 0 0 46px rgba(81, 246, 220, 0.018), 0 0 0 92px rgba(140, 123, 255, 0.014);
       content: "";
     }
 
-    .project-top {
+    .case-study:hover,
+    .case-study:focus-visible {
+      border-color: var(--card-border-active);
+      background-color: var(--panel-soft);
+      transform: translateY(-5px);
+    }
+
+    .case-meta {
       display: flex;
       justify-content: space-between;
-      color: var(--muted);
+      gap: 24px;
+      color: var(--color-slate-300);
       font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.07em;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
-    .project-card h3 {
-      position: relative;
-      z-index: 2;
-      max-width: 520px;
-      margin: 76px 0 18px;
+    .case-index {
+      color: var(--cyan);
+    }
+
+    .case-study h3 {
+      max-width: 660px;
+      margin: 58px 0 18px;
       font-family: var(--display);
-      font-size: clamp(1.8rem, 3.4vw, 3.2rem);
+      font-size: clamp(2rem, 3.5vw, 3.6rem);
       font-weight: 500;
       letter-spacing: -0.06em;
-      line-height: 1;
+      line-height: 0.98;
     }
 
-    .project-card p {
-      position: relative;
-      z-index: 2;
-      max-width: 500px;
+    .case-study:not(.case-study--primary) h3 {
+      margin-top: 36px;
+      font-size: clamp(1.65rem, 2.5vw, 2.55rem);
+    }
+
+    .case-study p {
+      max-width: 610px;
       margin: 0;
       color: var(--muted);
-      line-height: 1.65;
+      font-size: 0.98rem;
+      line-height: 1.72;
     }
 
-    .project-arrow {
+    .case-outcome {
+      display: flex;
+      margin-top: 30px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .case-outcome span:last-child {
       color: var(--cyan);
-      font-size: 1rem;
+    }
+
+    .open-source {
+      margin-top: 64px;
+    }
+
+    .open-source-head {
+      display: flex;
+      margin-bottom: 20px;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .open-source-head h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(1.65rem, 2.4vw, 2.4rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+    }
+
+    .open-source-head p {
+      max-width: 470px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      text-align: right;
+    }
+
+    .compact-projects {
+      display: grid;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .compact-project {
+      display: flex;
+      min-height: 148px;
+      padding: 24px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      transition: background var(--duration-fast) ease, color var(--duration-fast) ease;
+    }
+
+    .compact-project span {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .compact-project strong {
+      max-width: 220px;
+      font-family: var(--display);
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .compact-project:hover,
+    .compact-project:focus-visible {
+      background: var(--panel-soft);
+      color: var(--cyan);
     }
 
     .contact {
@@ -1301,6 +1557,16 @@
       color: var(--cyan);
     }
 
+    .contact-intro {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: -16px 0 38px;
+      color: var(--color-slate-300);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
     .contact-actions {
       position: relative;
       z-index: 2;
@@ -1318,7 +1584,7 @@
       gap: 16px;
       color: var(--cyan);
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.75rem;
       letter-spacing: 0.07em;
       text-decoration: none;
       text-transform: uppercase;
@@ -1339,7 +1605,7 @@
       border-top: 1px solid var(--line);
       color: #5e6a74;
       font-family: var(--mono);
-      font-size: 0.57rem;
+      font-size: 0.75rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
     }
@@ -1395,27 +1661,74 @@
       .community-contribution { grid-template-columns: 1fr; gap: 16px; }
       .academic-layout { grid-template-columns: 1fr; }
 
-      .project-card--featured { grid-column: span 12; }
-      .project-card:not(.project-card--featured) { grid-column: span 6; }
+      .case-study--primary {
+        min-height: 470px;
+        grid-column: span 12;
+        grid-row: auto;
+      }
+      .case-study:not(.case-study--primary) { grid-column: span 6; }
+      .compact-projects { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 680px) {
       .container { width: min(100% - 28px, 1240px); }
-      .topbar-inner { min-height: 72px; }
+      .topbar-inner { min-height: 72px; grid-template-columns: 1fr auto; gap: 12px; }
       .logo-name { display: none; }
-      .nav a:not(:last-child) { display: none; }
-      .language-switch { min-width: 78px; }
-      .language-switch button { width: 31px; }
+      .menu-toggle { display: grid; }
+      .nav {
+        position: absolute;
+        top: 71px;
+        right: 0;
+        left: 0;
+        display: none;
+        padding: 12px;
+        border: 1px solid var(--line);
+        background: rgba(6, 10, 15, 0.98);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .nav.is-open { display: grid; }
+      .nav a {
+        display: flex;
+        min-height: 48px;
+        padding: 0 12px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.76rem;
+      }
+      .nav a:last-child { border-bottom: 0; }
+      .language-switch { min-width: 94px; }
+      .language-switch button { width: 41px; }
 
-      .hero { padding-top: 126px; }
-      .hero h1 { font-size: clamp(3.5rem, 18vw, 5.2rem); }
+      .hero { padding-top: 128px; padding-bottom: 88px; }
+      .hero-grid { gap: 24px; }
+      .hero h1 { font-size: clamp(3.2rem, 16vw, 4.6rem); }
       .hero-statement { margin-top: 36px; }
-      .portrait-panel { min-height: 470px; }
+      .hero-actions { display: grid; grid-template-columns: 1fr; }
+      .hero-action { justify-content: space-between; }
+      .portrait-panel { min-height: 390px; }
+      .hero-foot { display: none; }
 
       section { padding: 88px 0; }
-      .metrics-grid { grid-template-columns: 1fr; }
-      .metric { min-height: 150px; border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-      .metric:last-child { border-bottom: 0; }
+      .section-head { margin-bottom: 52px; }
+      .section-head h2 { font-size: clamp(2.45rem, 13vw, 3.4rem); }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .metric { min-height: 160px; padding: 26px 20px; border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .metric strong { font-size: clamp(2.2rem, 11vw, 3rem); }
+      .metric p { font-size: 0.75rem; }
+      .metric:nth-last-child(-n+2) { border-bottom: 0; }
+
+      .case-study-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+      .case-study--primary,
+      .case-study:not(.case-study--primary) { grid-column: 1; min-height: 410px; }
+      .case-study { padding: 28px; }
+      .case-study h3,
+      .case-study:not(.case-study--primary) h3 { margin-top: 48px; font-size: clamp(2rem, 10vw, 2.75rem); }
+      .case-meta { font-size: 0.75rem; }
+      .case-outcome { align-items: flex-start; flex-direction: column; }
+      .open-source-head { align-items: flex-start; flex-direction: column; }
+      .open-source-head p { text-align: left; }
+      .compact-projects { grid-template-columns: 1fr; }
 
       .expertise-grid { grid-template-columns: 1fr; }
       .expertise-card { min-height: 300px; padding: 30px; }
@@ -1439,16 +1752,17 @@
       .work-dot { display: none; }
 
       .featured-thought { min-height: 440px; padding: 30px; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-card:nth-child(n) { grid-column: 1; min-height: 300px; }
 
       .contact-box { padding: 58px 28px; }
+      .contact-box h2 { font-size: clamp(3rem, 15vw, 4.2rem); }
+      .contact-intro { margin-top: -8px; font-size: 0.98rem; }
       footer,
       footer div { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#contenido" data-i18n="skip_content">Saltar al contenido</a>
   <header class="topbar">
     <div class="container topbar-inner">
       <a class="logo" href="#inicio" aria-label="Ir al inicio" data-i18n-aria="home_aria">
@@ -1456,21 +1770,26 @@
         <span class="logo-name">Esteban Hernández</span>
       </a>
       <div class="topbar-status"><span>●</span> Bogotá / COL · UTC−5</div>
-      <nav class="nav" aria-label="Navegación principal" data-i18n-aria="nav_aria">
+      <nav class="nav" id="primary-navigation" aria-label="Navegación principal" data-i18n-aria="nav_aria">
+        <a href="#proyectos" data-i18n="nav_work">Trabajo</a>
         <a href="#perfil" data-i18n="nav_profile">Perfil</a>
-        <a href="#experiencia" data-i18n="nav_experience">Experiencia</a>
-        <a href="#impacto" data-i18n="nav_impact">Impacto</a>
-        <a href="#academia" data-i18n="nav_research">Investigación</a>
+        <a href="#experiencia" data-i18n="nav_experience">Trayectoria</a>
+        <a href="#ideas" data-i18n="nav_ideas">Ideas</a>
         <a href="#contacto" data-i18n="nav_connect">Conectar ↗</a>
       </nav>
-      <div class="language-switch" role="group" aria-label="Seleccionar idioma" data-i18n-aria="language_aria">
-        <button type="button" data-language="es" aria-pressed="true">ES</button>
-        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      <div class="topbar-actions">
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Abrir navegación" data-i18n-aria="menu_aria">
+          <span class="menu-toggle-lines" aria-hidden="true"></span>
+        </button>
+        <div class="language-switch" role="group" aria-label="Seleccionar idioma" data-i18n-aria="language_aria">
+          <button type="button" data-language="es" aria-pressed="true">ES</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
       </div>
     </div>
   </header>
 
-  <main>
+  <main id="contenido">
     <section class="hero" id="inicio">
       <div class="container hero-grid">
         <div class="hero-copy">
@@ -1480,6 +1799,10 @@
             <strong>Arquitecto de software, investigador y líder en computación avanzada.</strong>
             Durante más de 22 años he conectado ingeniería industrial, investigación profunda e infraestructura de escala nacional en América Latina.
           </p>
+          <div class="hero-actions" aria-label="Acciones principales" data-i18n-aria="hero_actions_aria">
+            <a class="hero-action primary" href="#proyectos"><span data-i18n="hero_work">Ver trabajo seleccionado</span><span>↓</span></a>
+            <a class="hero-action" href="#contacto"><span data-i18n="hero_contact">Explorar colaboración</span><span>↗</span></a>
+          </div>
         </div>
         <div class="portrait-panel" role="img" aria-label="Retrato circular de Esteban Hernández con la luna al fondo" data-i18n-aria="portrait_aria">
           <div class="portrait-circle">
@@ -1503,10 +1826,64 @@
       </div>
     </section>
 
+    <section class="selected-work" id="proyectos">
+      <div class="container">
+        <div class="section-head">
+          <p class="mono-label" data-i18n="projects_label">01 / Trabajo seleccionado</p>
+          <div>
+            <h2 data-i18n="projects_title">Tecnología convertida en capacidad real.</h2>
+            <p data-i18n="projects_description">Una selección de proyectos que conectan datos abiertos, ciencia aplicada, infraestructura computacional y construcción de comunidad.</p>
+          </div>
+        </div>
+
+        <div class="case-study-grid">
+          <a class="case-study case-study--primary" href="https://juanjosebernalv.github.io/mintic-team/#/pitch" target="_blank" rel="noreferrer">
+            <div class="case-meta"><span class="case-index">CASE / 01</span><span data-i18n="project_raiz_meta">Proyecto actual · Datos abiertos + IA</span></div>
+            <div>
+              <h3>rAIz · <span data-i18n="project_raiz_title">IA para el campo colombiano</span></h3>
+              <p data-i18n="project_raiz_description">Proyecto colaborativo para el Concurso Datos al Ecosistema 2026. Integra datos oficiales de datos.gov.co, IDEAM, IGAC y el Ministerio de Agricultura para pronosticar el rendimiento agrícola y apoyar decisiones de siembra mediante un modelo y un tablero reproducibles, trazables y escalables.</p>
+              <div class="case-outcome"><span data-i18n="case_raiz_outcome">Datos oficiales · Modelo reproducible</span><span data-i18n="case_explore">Explorar ↗</span></div>
+            </div>
+          </a>
+
+          <a class="case-study" href="#impacto">
+            <div class="case-meta"><span class="case-index">CASE / 02</span><span>Cybercolombia · 2016—2026</span></div>
+            <div>
+              <h3 data-i18n="case_cyber_title">Capacidad científica regional.</h3>
+              <p data-i18n="case_cyber_description">Creación y consolidación de una comunidad que conecta academia, industria y sector público mediante formación práctica en HPC, IA y computación cuántica.</p>
+              <div class="case-outcome"><span data-i18n="case_cyber_outcome">9 escuelas · 10 universidades</span><span data-i18n="case_details">Ver impacto ↓</span></div>
+            </div>
+          </a>
+
+          <a class="case-study" href="#impacto">
+            <div class="case-meta"><span class="case-index">CASE / 03</span><span data-i18n="case_frontiers_meta">Clima · Cuántica · Datos</span></div>
+            <div>
+              <h3 data-i18n="case_frontiers_title">Infraestructuras para nuevas fronteras.</h3>
+              <p data-i18n="case_frontiers_description">Organización de CARLA Weather y Quantum Day, divulgación pública y cooperación global para sostener datos climáticos e infraestructura científica abierta.</p>
+              <div class="case-outcome"><span data-i18n="case_frontiers_outcome">Cooperación · Soberanía tecnológica</span><span data-i18n="case_details">Ver impacto ↓</span></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="open-source">
+          <div class="open-source-head">
+            <h3 data-i18n="open_source_title">Código y formación abiertos</h3>
+            <p data-i18n="open_source_description">Recursos públicos para aprender, reproducir y extender ideas en computación avanzada.</p>
+          </div>
+          <div class="compact-projects">
+            <a class="compact-project" href="https://github.com/eshernan/WeatherForecast_WRF" target="_blank" rel="noreferrer"><span>Forecasting / HPC ↗</span><strong>Weather Forecast WRF</strong></a>
+            <a class="compact-project" href="https://github.com/eshernan/quantum_computing" target="_blank" rel="noreferrer"><span>Quantum / Education ↗</span><strong>Quantum Computing</strong></a>
+            <a class="compact-project" href="https://github.com/eshernan/IATraining" target="_blank" rel="noreferrer"><span>AI / Training ↗</span><strong>AI Training</strong></a>
+            <a class="compact-project" href="https://github.com/eshernan/mpi_course" target="_blank" rel="noreferrer"><span>Parallel / Community ↗</span><strong>Cybercolombia MPI Course</strong></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="perfil">
       <div class="container">
         <div class="section-head">
-          <p class="mono-label" data-i18n="profile_label">01 / Perfil</p>
+          <p class="mono-label" data-i18n="profile_label">02 / Perfil</p>
           <div>
             <h2 data-i18n="profile_title">De la investigación profunda al software industrial.</h2>
             <p data-i18n="profile_description">Soy ingeniero de computación y datos con experiencia en arquitectura de software, HPC, sistemas distribuidos, inteligencia artificial aplicada y software cuántico. Mi trabajo se centra en convertir investigación compleja en plataformas y capacidades que funcionan a escala, con participación activa en comunidades de software libre y datos abiertos.</p>
@@ -1541,7 +1918,7 @@
     <section class="career" id="experiencia">
       <div class="container">
         <div class="section-head">
-          <p class="mono-label" data-i18n="career_label">02 / Experiencia profesional</p>
+          <p class="mono-label" data-i18n="career_label">03 / Trayectoria profesional</p>
           <div>
             <h2 data-i18n="career_title">Liderazgo técnico a escala regional y global.</h2>
             <p data-i18n="career_description">Una trayectoria que combina estrategia, arquitectura y ejecución en centros de investigación, organizaciones regionales y compañías tecnológicas globales.</p>
@@ -1629,7 +2006,7 @@
       <div class="container">
         <div class="impact-layout">
           <div class="impact-copy">
-            <p class="mono-label" data-i18n="impact_label">03 / Impacto regional</p>
+            <p class="mono-label" data-i18n="impact_label">04 / Impacto regional</p>
             <h2 data-i18n="impact_title">Fundar una <span>comunidad de práctica.</span></h2>
             <p data-i18n="impact_description">Como fundador y director de cooperación científica, he contribuido a convertir Cybercolombia en un puente entre academia, industria, sector público y aliados internacionales. El trabajo integra formación HPC, investigación de datos, aceleradores de IA y una nueva agenda de cooperación cuántica.</p>
             <a class="impact-link" href="https://cybercolombia.org/" target="_blank" rel="noreferrer" data-i18n="impact_link">Conocer Cybercolombia ↗</a>
@@ -1722,7 +2099,7 @@
     <section id="academia">
       <div class="container">
         <div class="section-head">
-          <p class="mono-label" data-i18n="academic_label">04 / Investigación y academia</p>
+          <p class="mono-label" data-i18n="academic_label">05 / Investigación y academia</p>
           <div>
             <h2 data-i18n="academic_title">Conocimiento que se publica, se enseña y se aplica.</h2>
             <p data-i18n="academic_description">Profesor universitario desde 2011, Ph.D. Cum Laude e investigador en rendimiento, arquitecturas heterogéneas, pronóstico meteorológico y educación HPC.</p>
@@ -1758,7 +2135,7 @@
     <section class="thoughts" id="ideas">
       <div class="container">
         <div class="section-head">
-          <p class="mono-label" data-i18n="ideas_label">05 / Ideas</p>
+          <p class="mono-label" data-i18n="ideas_label">06 / Ideas</p>
           <div>
             <h2 data-i18n="ideas_title">Pensar la infraestructura más allá de la tecnología.</h2>
             <p data-i18n="ideas_description">Reflexiones sobre datos, instituciones, educación e infraestructura científica como capacidades que deben perdurar.</p>
@@ -1791,40 +2168,6 @@
       </div>
     </section>
 
-    <section id="proyectos">
-      <div class="container">
-        <div class="section-head">
-          <p class="mono-label" data-i18n="projects_label">06 / Proyectos abiertos</p>
-          <div>
-            <h2 data-i18n="projects_title">Código, cursos y experimentos.</h2>
-            <p data-i18n="projects_description">Trabajo público para aprender, reproducir y extender ideas en computación avanzada.</p>
-          </div>
-        </div>
-
-        <div class="projects-grid">
-          <a class="project-card project-card--featured" href="https://juanjosebernalv.github.io/mintic-team/#/pitch" target="_blank" rel="noreferrer">
-            <div class="project-top"><span data-i18n="project_raiz_meta">Proyecto actual · Datos abiertos + IA</span><span class="project-arrow">↗</span></div>
-            <div><h3>rAIz · <span data-i18n="project_raiz_title">IA para el campo colombiano</span></h3><p data-i18n="project_raiz_description">Proyecto colaborativo para el Concurso Datos al Ecosistema 2026. Integra datos oficiales de datos.gov.co, IDEAM, IGAC y el Ministerio de Agricultura para pronosticar el rendimiento agrícola y apoyar decisiones de siembra mediante un modelo y un tablero reproducibles, trazables y escalables.</p></div>
-          </a>
-          <a class="project-card" href="https://github.com/eshernan/WeatherForecast_WRF" target="_blank" rel="noreferrer">
-            <div class="project-top"><span>Forecasting / HPC</span><span class="project-arrow">↗</span></div>
-            <div><h3>Weather Forecast WRF</h3><p data-i18n="project_wrf_description">Flujo integral de compilación, preproceso, simulación y posproceso meteorológico.</p></div>
-          </a>
-          <a class="project-card" href="https://github.com/eshernan/quantum_computing" target="_blank" rel="noreferrer">
-            <div class="project-top"><span>Quantum / Education</span><span class="project-arrow">↗</span></div>
-            <div><h3>Quantum Computing</h3><p data-i18n="project_quantum_description">Curso y ejercicios con Qiskit para explorar nuevos paradigmas de cómputo.</p></div>
-          </a>
-          <a class="project-card" href="https://github.com/eshernan/IATraining" target="_blank" rel="noreferrer">
-            <div class="project-top"><span>AI / Training</span><span class="project-arrow">↗</span></div>
-            <div><h3>AI Training</h3><p data-i18n="project_ai_description">Formación práctica en inteligencia artificial dirigida a profesionales de programación.</p></div>
-          </a>
-          <a class="project-card" href="https://github.com/eshernan/mpi_course" target="_blank" rel="noreferrer">
-            <div class="project-top"><span>Parallel / Community</span><span class="project-arrow">↗</span></div>
-            <div><h3>Cybercolombia MPI Course</h3><p data-i18n="project_mpi_description">Material de programación paralela con memoria distribuida para fortalecer capacidades en HPC.</p></div>
-          </a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <section class="contact" id="contacto">
@@ -1832,6 +2175,7 @@
       <div class="contact-box">
         <p class="mono-label" data-i18n="contact_label">07 / Contacto</p>
         <h2 data-i18n="contact_title">Construyamos capacidades para el <span>futuro.</span></h2>
+        <p class="contact-intro" data-i18n="contact_intro">Disponible para colaboración científica, asesoría estratégica y proyectos que conecten infraestructura avanzada, datos abiertos e impacto público.</p>
         <div class="contact-actions">
           <a class="button primary" href="mailto:esteban.hernandez@cybercolombia.org"><span data-i18n="contact_email">Escribir un mensaje</span> <span>↗</span></a>
           <a class="button" href="https://www.linkedin.com/in/hpccol/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
@@ -1927,19 +2271,37 @@
       };
 
       Object.assign(english, {
+        skip_content: "Skip to content",
+        nav_work: "Work",
         nav_profile: "Profile",
-        nav_experience: "Experience",
-        nav_impact: "Impact",
-        nav_research: "Research",
+        nav_experience: "Trajectory",
+        nav_ideas: "Ideas",
         nav_connect: "Connect ↗",
         hero_label: "Ph.D. · Computer and Data Engineering",
         hero_statement: "<strong>Software architect, researcher, and advanced-computing leader.</strong> For more than 22 years, I have connected industrial engineering, deep research, and national-scale infrastructure across Latin America.",
+        hero_work: "View selected work",
+        hero_contact: "Explore collaboration",
         hero_domains: "Architecture · HPC · Data · AI · Quantum",
         metric_experience: "Years of professional experience",
         metric_open: "Open-source and open-data communities",
         metric_schools: "Editions of the HPC Summer School",
         metric_universities: "Colombian universities connected",
-        profile_label: "01 / Profile",
+        projects_label: "01 / Selected work",
+        projects_title: "Technology transformed into real capability.",
+        projects_description: "A selection of projects connecting open data, applied science, computational infrastructure, and community building.",
+        case_raiz_outcome: "Official data · Reproducible model",
+        case_explore: "Explore ↗",
+        case_cyber_title: "Regional scientific capacity.",
+        case_cyber_description: "Building and sustaining a community that connects academia, industry, and the public sector through practical education in HPC, AI, and quantum computing.",
+        case_cyber_outcome: "9 schools · 10 universities",
+        case_details: "View impact ↓",
+        case_frontiers_meta: "Climate · Quantum · Data",
+        case_frontiers_title: "Infrastructure for new frontiers.",
+        case_frontiers_description: "Organization of CARLA Weather and Quantum Day, public engagement, and global cooperation to sustain climate data and open scientific infrastructure.",
+        case_frontiers_outcome: "Cooperation · Technological sovereignty",
+        open_source_title: "Open code and education",
+        open_source_description: "Public resources designed to support learning, reproducibility, and the advancement of ideas in advanced computing.",
+        profile_label: "02 / Profile",
         profile_title: "From deep research to industrial software.",
         profile_description: "I am a computer and data engineer with experience spanning software architecture, HPC, distributed systems, applied artificial intelligence, and quantum software. My work focuses on translating complex research into platforms and capabilities that operate at scale, while actively contributing to open-source and open-data communities.",
         expertise_arch_title: "HPC and infrastructure",
@@ -1950,7 +2312,7 @@
         expertise_science_description: "Large language models, generative AI, computer vision, Amazon Braket, IBM Quantum, Qiskit, and Cirq integrated with classical workflows.",
         expertise_ai_title: "Strategic leadership",
         expertise_ai_description: "International cooperation, technical direction, team leadership, and engagement with executive stakeholders and multilateral organizations.",
-        career_label: "02 / Professional experience",
+        career_label: "03 / Professional trajectory",
         career_title: "Technical leadership at regional and global scale.",
         career_description: "A career combining strategy, architecture, and execution across research centers, regional organizations, and global technology companies.",
         role_current: "Current",
@@ -1975,7 +2337,7 @@
         foundation_dian: "National-scale technical architecture, interoperability, security, and digital transformation for Colombia's Tax and Customs Directorate.",
         foundation_globant: "TechMaster for the Big Data and HPC Studio, conducting research into machine learning and large-scale cloud infrastructure.",
         foundation_runt: "High-performance architecture for transport services, followed by applied large-scale data research supporting land restitution analysis.",
-        impact_label: "03 / Regional impact",
+        impact_label: "04 / Regional impact",
         impact_title: "Building a <span>community of practice.</span>",
         impact_description: "As Founder and Head of Scientific Cooperation, I have helped establish Cybercolombia as a bridge among academia, industry, the public sector, and international partners. The work combines HPC education, data research, AI accelerators, and a new agenda for quantum collaboration.",
         orbit_people: "HPC + AI",
@@ -2006,7 +2368,7 @@
         outreach_link: "Recap ↗",
         climate_contribution_label: "14—15 OCT 2025 · ESSEX, UK",
         climate_contribution_description: "<em>Expanding and Accelerating Global Climate Data Collaboration</em>. Participation on behalf of Cybercolombia in a Radiant Earth convening of 37 specialists. The discussion connected enduring institutions with cooperative governance, sustainable funding, provenance, reproducible publication, and federated computing, emphasizing that the Global South must help co-design this infrastructure.",
-        academic_label: "04 / Research and academia",
+        academic_label: "05 / Research and academia",
         academic_title: "Knowledge that is published, taught, and applied.",
         academic_description: "A university professor since 2011, Cum Laude Ph.D., and researcher in performance engineering, heterogeneous architectures, numerical weather prediction, and HPC education.",
         education_label: "Education",
@@ -2025,19 +2387,21 @@
         paper_energy: "Energy and performance monitoring across NVIDIA Tesla GPUs and Intel Xeon Phi.",
         paper_languages_title: "Parallel programming languages",
         paper_languages: "OpenMPC, OmpSs, OpenACC, and OpenMP across heterogeneous architectures.",
-        ideas_label: "05 / Ideas",
-        projects_label: "06 / Open projects",
+        ideas_label: "06 / Ideas",
         project_raiz_meta: "Current project · Open data + AI",
         project_raiz_title: "AI for Colombian agriculture",
         project_raiz_description: "A collaborative project for the 2026 Data to the Ecosystem Challenge. It integrates official data from datos.gov.co, IDEAM, IGAC, and the Ministry of Agriculture to forecast crop yields and support planting decisions through a reproducible, traceable, and scalable model and dashboard.",
-        contact_label: "07 / Contact"
+        contact_label: "07 / Contact",
+        contact_intro: "Available for scientific collaboration, strategic advisory work, and projects connecting advanced infrastructure, open data, and public impact."
       });
 
       const englishAria = {
         home_aria: "Go to the beginning",
         nav_aria: "Primary navigation",
+        menu_aria: "Open navigation",
         language_aria: "Select language",
         metrics_aria: "Key figures",
+        hero_actions_aria: "Primary actions",
         portrait_aria: "Circular portrait of Esteban Hernández with the moon in the background",
         orbit_aria: "Cybercolombia impact network"
       };
@@ -2057,6 +2421,25 @@
       const ariaElements = [...document.querySelectorAll("[data-i18n-aria]")];
       const spanish = Object.fromEntries(translatedElements.map((element) => [element.dataset.i18n, element.innerHTML]));
       const spanishAria = Object.fromEntries(ariaElements.map((element) => [element.dataset.i18nAria, element.getAttribute("aria-label")]));
+      const menuToggle = document.querySelector(".menu-toggle");
+      const primaryNavigation = document.querySelector("#primary-navigation");
+      const menuLabels = {
+        es: { open: "Abrir navegación", close: "Cerrar navegación" },
+        en: { open: "Open navigation", close: "Close navigation" }
+      };
+
+      function updateMenuLabel(language) {
+        if (!menuToggle) return;
+        const state = menuToggle.getAttribute("aria-expanded") === "true" ? "close" : "open";
+        menuToggle.setAttribute("aria-label", menuLabels[language][state]);
+      }
+
+      function setMenu(open) {
+        if (!menuToggle || !primaryNavigation) return;
+        menuToggle.setAttribute("aria-expanded", String(open));
+        primaryNavigation.classList.toggle("is-open", open);
+        updateMenuLabel(document.documentElement.lang === "es" ? "es" : "en");
+      }
 
       function readPreference() {
         try {
@@ -2105,11 +2488,32 @@
           button.setAttribute("aria-pressed", String(button.dataset.language === selectedLanguage));
         });
 
+        updateMenuLabel(selectedLanguage);
+
         if (persist) savePreference(selectedLanguage);
       }
 
       document.querySelectorAll("[data-language]").forEach((button) => {
         button.addEventListener("click", () => applyLanguage(button.dataset.language, true));
+      });
+
+      menuToggle?.addEventListener("click", () => {
+        setMenu(menuToggle.getAttribute("aria-expanded") !== "true");
+      });
+
+      primaryNavigation?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setMenu(false));
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setMenu(false);
+          menuToggle?.focus();
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 680) setMenu(false);
       });
 
       const savedLanguage = readPreference();
